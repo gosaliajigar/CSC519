@@ -88,7 +88,7 @@ public class MainActivityFragment extends Fragment {
         protected String[] doInBackground(String... data) {
             String[] results = null;
             // Check if data is not null and has at least 2 data points
-            // (city and forecast days) else let it display dummy data
+            // (city and forecast days) else display suitable error message
             if (data != null
                     && data.length > 1) {
                 try {
@@ -100,6 +100,8 @@ public class MainActivityFragment extends Fragment {
                 } catch (Exception exception) {
                     Log.d(MainActivity.APP_TAG, "FetchWeatherTask doInBackground Exception : " + exception.toString());
                 }
+            } else {
+                return new String[] {"Weather data not available, try again later!"};
             }
             return results;
         }

@@ -87,14 +87,19 @@ public class MainActivityFragment extends Fragment {
         @Override
         protected String[] doInBackground(String... data) {
             String[] results = null;
-            try {
-                String weatherDataString = getWeatherData(MainActivity.CITY, MainActivity.FORECAS_DAYS);
-                if (weatherDataString != null && weatherDataString.length() > 0) {
-                    results = getWeatherDataFromJson(weatherDataString, Integer.valueOf(MainActivity.FORECAS_DAYS));
+            // Check if data is not null and has at least 2 data points
+            // (city and forecast days) else let it display dummy data
+            if (data != null
+                    && data.length > 1) {
+                try {
+                    String weatherDataString = getWeatherData(data[0], data[1]);
+                    if (weatherDataString != null && weatherDataString.length() > 0) {
+                        results = getWeatherDataFromJson(weatherDataString, Integer.valueOf(data[1]));
+                    }
+                    Log.d(MainActivity.APP_TAG, "Total no. of days weather data was retrieved : " + ((results != null) ? results.length : null));
+                } catch (Exception exception) {
+                    Log.d(MainActivity.APP_TAG, "FetchWeatherTask doInBackground Exception : " + exception.toString());
                 }
-                Log.d(MainActivity.APP_TAG, "Total no. of days weather data was retrieved : " + ((results != null) ? results.length : null));
-            } catch (Exception exception) {
-                Log.d(MainActivity.APP_TAG, "FetchWeatherTask doInBackground Exception : " + exception.toString());
             }
             return results;
         }

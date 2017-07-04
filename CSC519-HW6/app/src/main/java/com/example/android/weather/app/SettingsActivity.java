@@ -20,6 +20,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.android.weather.app.data.WeatherContract;
 
@@ -81,7 +82,11 @@ public class SettingsActivity extends PreferenceActivity
             if (preference.getKey().equals(getString(R.string.pref_location_key))) {
                 FetchWeatherTask weatherTask = new FetchWeatherTask(this);
                 String location = value.toString();
-                weatherTask.execute(location, FORECAST_DAYS);
+                // execute async task only if location is present
+                if (location != null
+                        && location.length() > 0) {
+                    weatherTask.execute(location, FORECAST_DAYS);
+                }
             } else {
                 // notify code that weather may be impacted
                 getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);

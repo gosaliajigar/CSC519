@@ -21,8 +21,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.weather.app.data.WeatherContract;
 import com.example.android.weather.app.data.WeatherContract.LocationEntry;
@@ -121,25 +124,39 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
         // The SimpleCursorAdapter will take data from the database through the
         // Loader and use it to populate the ListView it's attached to.
         // TO DO 1
-        mForecastAdapter = null;
-
+        mForecastAdapter = new SimpleCursorAdapter(
+                getActivity(),
+                R.layout.list_item_forecast,
+                null,
+                columns,
+                viewIDs,
+                0);
         // END TO DO 1
         mForecastAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 boolean isMetric = Utility.isMetric(getActivity());
                 switch (columnIndex) {
-                    case COL_WEATHER_MAX_TEMP:
+                    case COL_WEATHER_MAX_TEMP: {
+                        // TO DO 2
+                        String high = Utility.formatTemperature(
+                                cursor.getDouble(cursor.getColumnIndex(WeatherEntry.COLUMN_MAX_TEMP)), isMetric);
+                        ((TextView) view).setText(high);
+                        return true;
+                    }
                     case COL_WEATHER_MIN_TEMP: {
                         // we have to do some formatting and possibly a conversion
-                        // TO DO 2
-
+                        String low = Utility.formatTemperature(
+                                cursor.getDouble(cursor.getColumnIndex(WeatherEntry.COLUMN_MIN_TEMP)), isMetric);
+                        ((TextView) view).setText(low);
                         // END TO DO 2
                         return true;
                     }
                     case COL_WEATHER_DATE: {
                         // TO DO 3
-
+                        String dateString = Utility.formatDate(
+                                cursor.getString(cursor.getColumnIndex(WeatherEntry.COLUMN_DATETEXT)));
+                        ((TextView) view).setText(dateString);
                         // END TO DO 3
                         return true;
                     }
@@ -177,7 +194,11 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
 
     private void updateWeather() {
         String location = Utility.getPreferredLocation(getActivity());
-        new FetchWeatherTask(getActivity()).execute(location, SettingsActivity.FORECAST_DAYS);
+        // update weather only if location is not an EMPTY string
+        if (location != null
+                && location.length() > 0) {
+            new FetchWeatherTask(getActivity()).execute(location, SettingsActivity.FORECAST_DAYS);
+        }
     }
 
     @Override
@@ -204,11 +225,23 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
         mLocation = Utility.getPreferredLocation(getActivity());
 
         // TO DO 4
-        Uri weatherForLocationUri = null;
+        if (mLocation == null || mLocation.length() == 0) {
+            mLocation = "00000";
+        }
+
+        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(mLocation, startDate);
+        Log.d(getString(R.string.app_name), weatherForLocationUri.toString());
 
         // Now create and return a CursorLoader that will take care of
         // creating a Cursor for the data being displayed.
-        return null;
+        return new CursorLoader(
+                getActivity(),
+                weatherForLocationUri,
+                FORECAST_COLUMNS,
+                null,
+                null,
+                sortOrder
+        );
         // END TO DO 4
     }
 

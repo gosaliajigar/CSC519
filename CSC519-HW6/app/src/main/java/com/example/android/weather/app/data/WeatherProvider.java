@@ -134,6 +134,7 @@ public class WeatherProvider extends ContentProvider {
         // Here's the switch statement that, given a URI, will determine what kind of request it is,
         // and query the database accordingly.
         Cursor retCursor = null;
+
         switch (sUriMatcher.match(uri)) {
             // "weather/*/*"
             case WEATHER_WITH_LOCATION_AND_DATE:
@@ -162,7 +163,20 @@ public class WeatherProvider extends ContentProvider {
             // "location/*"
             case LOCATION_ID: {
                 // TO DO
-
+                // NOTE : uri.getPathSegments() will never be null as this case will be executed only when uri is of format location/*
+                // where uri.getPathSegments().get(0) = location & uri.getPathSegments().get(1) = location_id
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        WeatherContract.LocationEntry.TABLE_NAME,
+                        projection,
+                        // get location details only for the selected location_id in URI
+                        WeatherContract.LocationEntry.TABLE_NAME + "." + WeatherContract.LocationEntry._ID + " = ? ",
+                        // get location id from the URI
+                        // Using uri.getPathSegments().get(index) v/s ContentUris.parseId(uri)
+                        new String[]{uri.getPathSegments().get(1)},
+                        null,
+                        null,
+                        sortOrder
+                );
                 // END TO DO
                 break;
             }
@@ -179,7 +193,6 @@ public class WeatherProvider extends ContentProvider {
                 );
                 break;
             }
-
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

@@ -123,6 +123,23 @@ public class TestDb extends AndroidTestCase {
         return testValues;
     }
 
+    /**
+     * Adding this dummy data to actually test the location_id URI
+     * in WeatherProvider.java
+     *
+     * @return
+     */
+    static ContentValues createSanJoseLocationValues() {
+        // Create a new map of values, where column names are the keys
+        ContentValues testValues = new ContentValues();
+        testValues.put(LocationEntry.COLUMN_LOCATION_SETTING, "95131");
+        testValues.put(LocationEntry.COLUMN_CITY_NAME, "Carson San Jose, CA");
+        testValues.put(LocationEntry.COLUMN_COORD_LAT, 37.2795);
+        testValues.put(LocationEntry.COLUMN_COORD_LONG, -121.868);
+
+        return testValues;
+    }
+
     static void validateCursor(Cursor valueCursor, ContentValues expectedValues) {
 
         assertTrue(valueCursor.moveToFirst());

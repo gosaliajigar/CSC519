@@ -173,8 +173,12 @@ public class DetailActivity extends ActionBarActivity {
             String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATETEXT + " ASC";
 
             mLocation = Utility.getPreferredLocation(getActivity());
-            Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                    mLocation, forecastDate);
+            // If location is EMPTY then set it to 00000 to clear screen
+            if (mLocation == null || mLocation.length() == 0) {
+                mLocation = "00000";
+            }
+
+            Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(mLocation, forecastDate);
             Log.v(LOG_TAG, weatherForLocationUri.toString());
 
             // Now create and return a CursorLoader that will take care of
@@ -192,7 +196,21 @@ public class DetailActivity extends ActionBarActivity {
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
             Log.v(LOG_TAG, "In onLoadFinished");
-            if (!data.moveToFirst()) { return; }
+            // reset all views if no data in cursor
+            if (!data.moveToFirst()) {
+                ((TextView) getView().findViewById(R.id.detail_date_textview)).setText("");
+                ((TextView) getView().findViewById(R.id.detail_forecast_textview)).setText("");
+                ((TextView) getView().findViewById(R.id.detail_high_textview)).setText("");
+                ((TextView) getView().findViewById(R.id.detail_low_textview)).setText("");
+
+                // We still need this for the share intent
+                mForecast = "";
+                // If onCreateOptionsMenu has already happened, we need to update the share intent now.
+                if (mShareActionProvider != null) {
+                    mShareActionProvider.setShareIntent(createShareForecastIntent());
+                }
+                return;
+            }
 
             String dateString = Utility.formatDate(
                     data.getString(data.getColumnIndex(WeatherEntry.COLUMN_DATETEXT)));

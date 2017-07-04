@@ -212,6 +212,14 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         if (params.length != 2) {
             return null;
         }
+
+        // Now params is of size 2 then
+        // check if location and num of days exists
+        if (!((params[0].length() > 0)
+            && (params[1].length() > 0))){
+            return null;
+        }
+
         String locationQuery = params[0];
         String numDays = params[1];
 

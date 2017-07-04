@@ -106,6 +106,23 @@ public class TestProvider extends AndroidTestCase {
 
         TestDb.validateCursor(cursor, testValues);
 
+        // Test data to test WeatherProvider LOCATION_ID URI cursor query
+        ContentValues testValuesSanJose = TestDb.createSanJoseLocationValues();
+
+        Uri locationUriSanJose = mContext.getContentResolver().insert(LocationEntry.CONTENT_URI, testValuesSanJose);
+
+        long locationRowIdSanJose = ContentUris.parseId(locationUriSanJose);
+
+        cursor = mContext.getContentResolver().query(
+                LocationEntry.buildLocationUri(locationRowIdSanJose),
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                null  // sort order
+        );
+
+        TestDb.validateCursor(cursor, testValuesSanJose);
+
         // Fantastic.  Now that we have a location, add some weather!
         ContentValues weatherValues = TestDb.createWeatherValues(locationRowId);
 
@@ -123,7 +140,6 @@ public class TestProvider extends AndroidTestCase {
         );
 
         TestDb.validateCursor(weatherCursor, weatherValues);
-
 
         // Add the location values in with the weather data so that we can make
         // sure that the join worked and we actually get all the values back

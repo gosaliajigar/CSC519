@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -123,7 +124,8 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
         // Get a reference to the ListView, and attach this adapter to it.
         mListView = (ListView) rootView.findViewById(R.id.listview_forecast);
         // TO DO 5
-
+        Log.d(MainActivity.APP_TAG, "TO DO 5: onCreateView");
+        mListView.setAdapter(mForecastAdapter);
         // TO DO 5 END
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -232,7 +234,8 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
         mUseTodayLayout = useTodayLayout;
         if (mForecastAdapter != null) {
             // TO DO 6
-
+            Log.d(MainActivity.APP_TAG, "TO DO 6: setUseTodayLayout(" + useTodayLayout + ")");
+            mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
             // TO DO 6 END
         }
     }

@@ -18,6 +18,7 @@ package com.example.android.weather.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.android.weather.app.data.WeatherContract;
 
@@ -36,6 +37,7 @@ public class Utility {
 
     public static boolean isMetric(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.d(MainActivity.APP_TAG, "prefs: " + ((prefs != null && prefs.getAll() != null) ? prefs.getAll().toString() : ""));
         return prefs.getString(context.getString(R.string.pref_units_key),
                 context.getString(R.string.pref_units_metric))
                 .equals(context.getString(R.string.pref_units_metric));

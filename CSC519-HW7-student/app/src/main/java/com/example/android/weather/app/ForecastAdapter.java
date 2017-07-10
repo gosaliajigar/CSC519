@@ -3,11 +3,14 @@ package com.example.android.weather.app;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.android.weather.app.data.WeatherContract;
 
 /**
  * {@link ForecastAdapter} exposes a list of weather forecasts
@@ -78,13 +81,29 @@ public class ForecastAdapter extends CursorAdapter {
         switch (viewType) {
             case VIEW_TYPE_TODAY: {
                 // TO DO 1
-
+                // ForecastFragment.COL_WEATHER_CONDITION_ID is the hard coded column index
+                // based on FORECAST_COLUMNS. It could easily get outdated if FORECAST_COLUMNS
+                // is changed. Hence using column name to get the column index of weather_id.
+                // get weather_id column index by using column name
+                int columnIndex = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID);
+                // get weather_id using column index
+                int weatherId = cursor.getInt(columnIndex);
+                viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+                Log.d(MainActivity.APP_TAG, "TO DO 1: bindView today(viewType=" + viewType + "&columnIndex=" + columnIndex + "&weatherId=" + weatherId + ")");
                 // TO DO 1 END
                 break;
             }
             case VIEW_TYPE_FUTURE_DAY: {
                 // TO DO 2
-
+                // ForecastFragment.COL_WEATHER_CONDITION_ID is the hard coded column index
+                // based on FORECAST_COLUMNS. It could easily get outdated if FORECAST_COLUMNS
+                // is changed. Hence using column name to get the column index of weather_id.
+                // get weather_id column index by using column name
+                int columnIndex = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID);
+                // get weather_id using column index
+                int weatherId = cursor.getInt(columnIndex);
+                viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherId));
+                Log.d(MainActivity.APP_TAG, "TO DO 2: bindView future day(viewType=" + viewType + "&columnIndex=" + columnIndex + "&weatherId=" + weatherId + ")");
                 // TO DO 2 END
                 break;
             }
@@ -102,6 +121,7 @@ public class ForecastAdapter extends CursorAdapter {
 
         // Read user preference for metric or imperial temperature units
         boolean isMetric = Utility.isMetric(context);
+        Log.d(MainActivity.APP_TAG, "isMetric: " + isMetric);
 
         // Read high temperature from cursor
         double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
@@ -120,6 +140,12 @@ public class ForecastAdapter extends CursorAdapter {
     public int getItemViewType(int position) {
         // TO DO 3
         int type = -1;
+        if (position == VIEW_TYPE_TODAY && mUseTodayLayout) {
+            type = VIEW_TYPE_TODAY;
+        } else {
+            type = VIEW_TYPE_FUTURE_DAY;
+        }
+        Log.d(MainActivity.APP_TAG, "TO DO 3: getItemViewType(" + position + ") = " + type);
         // TO DO 3 END
         return type;
     }
@@ -127,7 +153,8 @@ public class ForecastAdapter extends CursorAdapter {
     @Override
     public int getViewTypeCount() {
         // TO DO 4
-        return 0;
+        Log.d(MainActivity.APP_TAG, "TO DO 4: getViewTypeCount");
+        return VIEW_TYPE_COUNT;
         // TO DO 4 END
     }
 }

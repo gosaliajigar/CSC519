@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -86,6 +87,7 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
+        PreferenceManager.setDefaultValues(getActivity(), R.xml.pref_general, true);
     }
 
     @Override

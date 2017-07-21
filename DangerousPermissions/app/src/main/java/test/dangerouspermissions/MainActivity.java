@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
 
-            if (checkSelfPermission(Manifest.permission.READ_SMS)
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
                     == PackageManager.PERMISSION_DENIED) {
 
-                Log.d("permission", "permission denied to READ_SMS - requesting it");
+                Log.d("permission", "permission denied to READ_PHONE_STATE - requesting it");
                 String[] permissions = {Manifest.permission.READ_PHONE_STATE};
 
                 requestPermissions(permissions, PERMISSION_REQUEST_CODE);

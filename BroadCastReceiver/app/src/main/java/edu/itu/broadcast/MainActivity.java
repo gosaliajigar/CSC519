@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
 	//declare the intent names here, except if change ACTION1, fix it in AndroidManifest.xml as well.
 	public static final String ACTION1 = "edu.itu.broadcast.staticevent";
 	public static final String ACTION2 = "edu.itu.broadcast.dynamicevent";
-	
-	String TAG = "MainActivity";
+
+	public static final String TAG = "CSC519_HW8_89753";
 	
 	MyReceiver mReceiver;
 	
@@ -31,25 +31,21 @@ public class MainActivity extends AppCompatActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new MainFragment()).commit();
 		}
-		
-		 
-		
-		
+		this.mReceiver = new MyReceiver();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+		registerReceiver(this.mReceiver, new IntentFilter(MainActivity.ACTION2));
 		Log.d(TAG, "Receiver should be registered");
 	}
+
 	@Override
 	protected void onPause() {  //or onDestroy()
-		
-		
+		unregisterReceiver(this.mReceiver);
 		Log.d(TAG, "Receiver should be unregistered");
 		super.onPause();
-
-	} 
+	}
 
 }

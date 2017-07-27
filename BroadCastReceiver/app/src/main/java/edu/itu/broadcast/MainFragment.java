@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
  */
 public class MainFragment extends Fragment {
 
-	String TAG= "MainFragment";
+	String TAG = "MainFragment";
 	
 	public MainFragment() {
 		// Required empty public constructor
@@ -27,12 +27,13 @@ public class MainFragment extends Fragment {
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View myView = inflater.inflate(R.layout.fragment_main, container, false);
-		
+
 		//setup button to send an intent for static registered receiver.
 		myView.findViewById(R.id.button1).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				
+				Log.d(MainActivity.TAG, "Send Broadcast with ACTION1 intent");
+				getActivity().sendBroadcast(new Intent(MainActivity.ACTION1));
 			}
 		});
 		
@@ -40,10 +41,11 @@ public class MainFragment extends Fragment {
 		myView.findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				
+				Log.d(MainActivity.TAG, "Send Broadcast with ACTION2 intent");
+				getActivity().sendBroadcast(new Intent(MainActivity.ACTION2));
 			}
 		});
+
 		return myView;
 	}
-
 }

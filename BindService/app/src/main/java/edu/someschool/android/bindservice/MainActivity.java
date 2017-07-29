@@ -16,9 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
-
-
 public class MainActivity extends Activity implements View.OnClickListener,
 		ServiceConnection {
 	private Button btnStart, btnStop, btnBind, btnUnbind, btnUpby1, btnUpby10;

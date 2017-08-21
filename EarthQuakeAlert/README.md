@@ -18,6 +18,7 @@ In order to demonstrate notifications, EarthQuakeAlert sends notification when t
 		    **meta-data <br>
 				android:name="com.google.android.geo.API_KEY" <br>
 				android:value="YOUR_API_KEY"** <br>
+  4. Save your YOUR_API_KEY in gradle.properties as GOOGLE_MAPS_API_KEY=YOUR_API_KEY
 
 ## Summary ##
 

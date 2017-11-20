@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/satellite"
+        android:orderInCategory="0"
+        app:showAsAction="ifRoom"
+        android:title="@string/satellite_label"
+        app:title="Sat" />
+
+    <item
+        android:id="@+id/traffic"
+        android:orderInCategory="10"
+        app:showAsAction="ifRoom"
+        android:title="@string/traffic_label"
+        app:title="@string/traffic_label" />
+
+    <item
+        android:id="@+id/indoor"
+        android:orderInCategory="20"
+        app:showAsAction="ifRoom"
+        android:title="@string/indoor_label"
+        app:title="Indoor" />
+
+    <item
+        android:id="@+id/building"
+        android:orderInCategory="30"
+        app:showAsAction="ifRoom"
+        android:title="@string/building_label"
+        app:title="3D" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/action_settings"
+        app:title="Settings" />
+
+</menu>

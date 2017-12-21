@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_magnitude_options">
+        <item>@string/pref_magnitude_label_1.0</item>
+        <item>@string/pref_magnitude_label_2.0</item>
+        <item>@string/pref_magnitude_label_3.0</item>
+        <item>@string/pref_magnitude_label_4.0</item>
+        <item>@string/pref_magnitude_label_4.5</item>
+        <item>@string/pref_magnitude_label_5.0</item>
+        <item>@string/pref_magnitude_label_5.5</item>
+        <item>@string/pref_magnitude_label_6.0</item>
+        <item>@string/pref_magnitude_label_6.5</item>
+        <item>@string/pref_magnitude_label_7.0</item>
+        <item>@string/pref_magnitude_label_7.5</item>
+    </string-array>
+
+    <string-array name="pref_magnitude_values">
+        <item>@string/pref_magnitude_1.0</item>
+        <item>@string/pref_magnitude_2.0</item>
+        <item>@string/pref_magnitude_3.0</item>
+        <item>@string/pref_magnitude_4.0</item>
+        <item>@string/pref_magnitude_4.5</item>
+        <item>@string/pref_magnitude_5.0</item>
+        <item>@string/pref_magnitude_5.5</item>
+        <item>@string/pref_magnitude_6.0</item>
+        <item>@string/pref_magnitude_6.5</item>
+        <item>@string/pref_magnitude_7.0</item>
+        <item>@string/pref_magnitude_7.5</item>
+    </string-array>
+
+    <string-array name="pref_duration_options">
+        <item>@string/pref_duration_label_last_hour</item>>
+        <item>@string/pref_duration_label_today</item>>
+        <item>@string/pref_duration_label_last_24_hr</item>>
+        <item>@string/pref_duration_label_this_week</item>>
+    </string-array>
+
+    <string-array name="pref_duration_values">
+        <item>@string/pref_duration_last_hour</item>>
+        <item>@string/pref_duration_today</item>>
+        <item>@string/pref_duration_last_24_hr</item>>
+        <item>@string/pref_duration_this_week</item>>
+    </string-array>
+
+    <string-array name="pref_distance_options">
+        <item>@string/pref_distance_label_miles</item>
+        <item>@string/pref_distance_label_kilometers</item>
+    </string-array>
+
+    <string-array name="pref_distance_values">
+        <item>@string/pref_distance_miles</item>
+        <item>@string/pref_distance_kilometers</item>
+    </string-array>
+</resources>
